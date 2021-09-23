@@ -14,13 +14,11 @@ export default function MainTabNavigation() {
         tabBarIcon: ({ focused, color }) => {
           let iconName: any;
 
-          switch (route.name) {
-            case "Home":
-              iconName = focused ? "home" : "home-outline";
-              break;
-            case "Profile":
-              iconName = focused ? "person" : "person-outline";
-              break;
+          if (route.name == "Home") {
+            iconName = focused ? "home" : "home-outline";
+          }
+          if (route.name == "Profile") {
+            iconName = focused ? "person" : "person-outline";
           }
 
           return <Ionicons name={iconName} size={20} color={color} />;
