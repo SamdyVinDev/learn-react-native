@@ -1,17 +1,21 @@
 import React from "react";
-import { FlatList, ScrollView, Text, View } from "react-native";
-import { data } from "../test_data";
-import ProductCard from "../components/product_card";
+import { View, Text, ScrollView, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "tailwind-react-native-classnames";
+import ProductCard from "../components/product_card";
+import { test_data } from "../test_data";
 
-export default function HomeScreen() {
-  const products = [data, data, data, data, data];
+const myData = [test_data, test_data, test_data, test_data, test_data];
+
+const HomeScreen = () => {
   return (
     <FlatList
-      data={products}
+      data={myData}
       keyExtractor={(item, index) => item._id + index}
-      renderItem={({ item, index }) => <ProductCard product={item} />}
+      renderItem={({ item }) => <ProductCard data={item} />}
       numColumns={2}
     />
   );
-}
+};
+
+export default HomeScreen;

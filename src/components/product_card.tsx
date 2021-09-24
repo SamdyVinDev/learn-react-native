@@ -1,54 +1,57 @@
-import { Image, View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { data } from "../test_data";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+  Dimensions,
+} from "react-native";
+import { test_data } from "../test_data";
 import tw from "tailwind-react-native-classnames";
 
-export default function ProductCard({ product }: { product: typeof data }) {
+const ProductCard = ({ data }: { data: typeof test_data }) => {
+  const { width, height } = Dimensions.get("window");
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={[
-        tw`flex-1 bg-gray-100  shadow shadow-md m-1`,
-        { borderRadius: 10 },
-      ]}
+      style={[tw`shadow-md bg-gray-200 m-2 flex-1`, { borderRadius: 10 }]}
     >
-      {product.discount > 0 && (
-        <Text
-          style={[
-            tw`bg-red-500 text-white px-5 py-1 font-bold`,
-            {
-              position: "absolute",
-              top: 0,
-              right: 0,
-              zIndex: 1,
-              borderBottomLeftRadius: 10,
-              borderTopRightRadius: 10,
-            },
-          ]}
-        >
-          {product.discount}%
-        </Text>
-      )}
       <Image
         style={{
           aspectRatio: 1 / 1,
-          width: "100%",
           resizeMode: "cover",
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
         }}
-        source={{ uri: product.images[0].uri }}
+        source={{ uri: data.options[0].image.uri }}
       />
-      <View style={tw`p-2`}>
-        <Text style={[tw`text-lg`, { maxHeight: 23 }]}>{product.name}</Text>
-        <Text style={[tw`text-xs`, { maxHeight: 32 }]}>{product.desc}</Text>
-        <Text style={[tw`text-xl`]}>
-          {product.min_price}$ - {product.max_price}$
+      <View style={tw`p-4`}>
+        <Text style={tw`text-lg`} numberOfLines={1} ellipsizeMode="tail">
+          {data.name}
         </Text>
-        <Text style={tw`text-sm text-gray-500`}>
-          {product.orders.length} ordered
+        <Text numberOfLines={2} ellipsizeMode="tail" style={[tw`text-sm`]}>
+          {data.desc}
         </Text>
+        <Text style={[tw`text-red-600`, { fontSize: 23 }]}>
+          {data.min_price}$ - {data.max_price}$
+        </Text>
+        <Text style={[tw`text-gray-500 text-sm`]}>
+          {data.orders.length} ordered
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => Alert.alert("Added to cart")}
+        >
+          <View
+            style={[tw`bg-blue-500 p-2 rounded mt-2 ml-auto`, { width: 100 }]}
+          >
+            <Text style={tw` text-center text-white`}>Add to cart</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
-}
+};
+
+export default ProductCard;
